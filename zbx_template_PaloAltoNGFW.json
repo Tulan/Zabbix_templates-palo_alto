@@ -1,8 +1,7 @@
 {
     "zabbix_export": {
         "version": "6.4",
-        "date": "2022-11-13T20:33:50Z",
-        "groups": [
+        "template_groups": [
             {
                 "uuid": "7df96b18c230490a9a0a9e2307226338",
                 "name": "Templates"
