@@ -12,6 +12,7 @@ This template was tested on:
 - PAN-OS, version 10.0
 - PAN-OS, version 10.1
 - PAN-OS, version 10.2
+- PAN-OS, version 11.0
 
 ## Setup
 
