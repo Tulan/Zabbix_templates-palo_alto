@@ -1,20 +1,25 @@
 zabbix_export:
   version: '6.4'
   template_groups:
-    -
-      uuid: 7df96b18c230490a9a0a9e2307226338
+    - uuid: 7df96b18c230490a9a0a9e2307226338
       name: Templates
   templates:
-    -
-      uuid: b8c9c61f2aa9496084edea293b792b9f
-      template: 'Palo Alto Networks Firewall'
-      name: 'Palo Alto Networks Firewall'
+    - uuid: b8c9c61f2aa9496084edea293b792b9f
+      template: 'Palo Alto Networks Firewall by SNMP'
+      name: 'Palo Alto Networks Firewall by SNMP'
+      description: |
+        Template for monitoring Palo Alto Networks by SNMPv2
+        MIBs used:
+        TBD
+        
+        Created by mrRobit
+      vendor:
+        name: mrRobit
+        version: 6.4-0
       groups:
-        -
-          name: Templates
+        - name: Templates
       items:
-        -
-          uuid: a1ab5a14371940148deec735738f05fa
+        - uuid: a1ab5a14371940148deec735738f05fa
           name: 'Processor 1 Load (mgmt)'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.2.1.25.3.3.1.2.1
@@ -23,13 +28,11 @@ zabbix_export:
           units: '%'
           description: 'The average, over the last minute, of the percentage of time that this processor was not idle. Implementations may approximate this one minute smoothing period if necessary.'
           triggers:
-            -
-              uuid: 95a6bd8630fa456a9561750cbe1654e4
-              expression: 'min(/Palo Alto Networks Firewall/hrProcessorLoad1,15m)>95'
+            - uuid: 95a6bd8630fa456a9561750cbe1654e4
+              expression: 'min(/Palo Alto Networks Firewall by SNMP/hrProcessorLoad1,15m)>95'
               name: 'CPU utilization (MP) on {HOST.HOST} is over 95% for 15 min'
               priority: AVERAGE
-        -
-          uuid: a3a5a2fcd47445ed8c35975142d61033
+        - uuid: a3a5a2fcd47445ed8c35975142d61033
           name: 'Processor 2 Load (data)'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.2.1.25.3.3.1.2.2
@@ -38,13 +41,11 @@ zabbix_export:
           units: '%'
           description: 'The average, over the last minute, of the percentage of time that this processor was not idle. Implementations may approximate this one minute smoothing period if necessary.'
           triggers:
-            -
-              uuid: 0894b9b8b4854aa2ab27cd47ff9c553e
-              expression: 'min(/Palo Alto Networks Firewall/hrProcessorLoad2,15m)>95'
+            - uuid: 0894b9b8b4854aa2ab27cd47ff9c553e
+              expression: 'min(/Palo Alto Networks Firewall by SNMP/hrProcessorLoad2,15m)>95'
               name: 'CPU utilization (DP) on {HOST.HOST} is over 95% for 15 min'
               priority: AVERAGE
-        -
-          uuid: 308390b1b273407c86b864d0673dc60f
+        - uuid: 308390b1b273407c86b864d0673dc60f
           name: 'ICMP Check'
           type: SIMPLE
           key: 'icmpping[,2]'
@@ -53,18 +54,15 @@ zabbix_export:
           valuemap:
             name: 'Service state'
           preprocessing:
-            -
-              type: BOOL_TO_DECIMAL
+            - type: BOOL_TO_DECIMAL
               parameters:
                 - ''
           triggers:
-            -
-              uuid: 709b3fb1eef14529ab27b1f31107bc43
-              expression: 'last(/Palo Alto Networks Firewall/icmpping[,2],#1)=0 and last(/Palo Alto Networks Firewall/icmpping[,2],#2)=0'
+            - uuid: 709b3fb1eef14529ab27b1f31107bc43
+              expression: 'last(/Palo Alto Networks Firewall by SNMP/icmpping[,2],#1)=0 and last(/Palo Alto Networks Firewall by SNMP/icmpping[,2],#2)=0'
               name: '{HOST.HOST} is down!'
               priority: HIGH
-        -
-          uuid: c90f30c8cb8c4d83ba2c6423e7912801
+        - uuid: c90f30c8cb8c4d83ba2c6423e7912801
           name: 'Chassis type'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.2.1.0
@@ -75,16 +73,14 @@ zabbix_export:
           value_type: TEXT
           description: 'Chassis type for this Palo Alto device.'
           inventory_link: MODEL
-        -
-          uuid: e2d110b53e054707838ad9217f2744e8
+        - uuid: e2d110b53e054707838ad9217f2744e8
           name: 'GP active tunnels'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.25461.2.1.2.5.1.3.0
           key: panGPGWUtilizationActiveTunnels
           history: 30d
           description: 'Number of active tunnels.'
-        -
-          uuid: f200143e6e9b40658b65e979fd25329a
+        - uuid: f200143e6e9b40658b65e979fd25329a
           name: 'GP tunnels supported'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.25461.2.1.2.5.1.2.0
@@ -93,8 +89,7 @@ zabbix_export:
           history: 7d
           trends: '0'
           description: 'Max tunnels allowed.'
-        -
-          uuid: 1e314d43713f477da1c6c6c4f454b224
+        - uuid: 1e314d43713f477da1c6c6c4f454b224
           name: 'GP gateway utilization'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.4.1.25461.2.1.2.5.1.1.0
@@ -103,46 +98,40 @@ zabbix_export:
           units: '%'
           description: 'GlobalProtect Gateway utilization percentage.'
           triggers:
-            -
-              uuid: da544f9bc3a848aba438047dde8fe21d
-              expression: 'min(/Palo Alto Networks Firewall/panGPGWUtilizationPct,15m)>95'
+            - uuid: da544f9bc3a848aba438047dde8fe21d
+              expression: 'min(/Palo Alto Networks Firewall by SNMP/panGPGWUtilizationPct,15m)>95'
               name: 'High GlobalProtect utilization (>95%) for 15m'
               priority: AVERAGE
               description: 'Hitting GP limits for 15  minutes'
-        -
-          uuid: 17d6ff3560f54dfca8cec846dc57c206
+        - uuid: 17d6ff3560f54dfca8cec846dc57c206
           name: 'Total active sessions'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.3.3.0
           key: panSessionActive
           history: 30d
           description: 'Total number of active sessions.'
-        -
-          uuid: 63f7cd5c863c4a9b9f6d2aaa30e43964
+        - uuid: 63f7cd5c863c4a9b9f6d2aaa30e43964
           name: 'Total active ICMP sessions'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.3.6.0
           key: panSessionActiveICMP
           history: 30d
           description: 'Total number of active ICMP sessions.'
-        -
-          uuid: 9ef0798e5f4a45d48e919804c31dfa99
+        - uuid: 9ef0798e5f4a45d48e919804c31dfa99
           name: 'Total active TCP sessions'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.3.4.0
           key: panSessionActiveTcp
           history: 30d
           description: 'Total number of active TCP sessions.'
-        -
-          uuid: b362cdbb7a9a4d32acdef7b36ca49a52
+        - uuid: b362cdbb7a9a4d32acdef7b36ca49a52
           name: 'Total active UDP sessions'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.3.5.0
           key: panSessionActiveUdp
           history: 30d
           description: 'Total number of active UDP sessions.'
-        -
-          uuid: 7a46b72b7b9043e7b5adb2aa8401edeb
+        - uuid: 7a46b72b7b9043e7b5adb2aa8401edeb
           name: 'Total supported sessions'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.3.2.0
@@ -151,8 +140,7 @@ zabbix_export:
           history: 7d
           trends: '0'
           description: 'Total number of sessions supported.'
-        -
-          uuid: 28a534703c6049d0abfa8622cabfac72
+        - uuid: 28a534703c6049d0abfa8622cabfac72
           name: 'Session table utilization'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.3.1.0
@@ -161,15 +149,13 @@ zabbix_export:
           units: '%'
           description: 'Session table utilization percentage. Values should be between 0 and 100.'
           triggers:
-            -
-              uuid: 1c55fd38643b4a40a890806903974e22
-              expression: 'min(/Palo Alto Networks Firewall/panSessionUtilization,15m)>90'
+            - uuid: 1c55fd38643b4a40a890806903974e22
+              expression: 'min(/Palo Alto Networks Firewall by SNMP/panSessionUtilization,15m)>90'
               name: 'High session table utilization (>90%) for 15m'
               priority: HIGH
               description: 'Reaching session table capacity'
               manual_close: 'YES'
-        -
-          uuid: 7a7d7c2950014f599a59d6d7e286b710
+        - uuid: 7a7d7c2950014f599a59d6d7e286b710
           name: 'App-ID content date'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.20.0
@@ -179,8 +165,7 @@ zabbix_export:
           trends: '0'
           value_type: TEXT
           description: 'Currently installed application definition release date. If no release date is found, unknown is returned.'
-        -
-          uuid: e6c666169589415e9c1a3f9072e1b505
+        - uuid: e6c666169589415e9c1a3f9072e1b505
           name: 'App-ID Version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.7.0
@@ -191,14 +176,12 @@ zabbix_export:
           value_type: TEXT
           description: 'Currently installed application definition version. If no application definition is found, 0 is returned.'
           triggers:
-            -
-              uuid: 394584e124f6433bb41cbbd867348144
-              expression: '(last(/Palo Alto Networks Firewall/panSysAppVersion,#1)<>last(/Palo Alto Networks Firewall/panSysAppVersion,#2))=1'
+            - uuid: 394584e124f6433bb41cbbd867348144
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysAppVersion,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysAppVersion,#2))=1'
               name: 'App-ID version has changed to {ITEM.VALUE1}'
               priority: INFO
               manual_close: 'YES'
-        -
-          uuid: 1991875df7f54cc5b60c2a34e9676c77
+        - uuid: 1991875df7f54cc5b60c2a34e9676c77
           name: 'Global Protect Client Version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.15.0
@@ -209,14 +192,12 @@ zabbix_export:
           value_type: TEXT
           description: 'Currently installed global-protect client package version. If package is not installed, 0.0.0 is returned.'
           triggers:
-            -
-              uuid: 211061de1d274109820af7f1e27ab337
-              expression: '(last(/Palo Alto Networks Firewall/panSysGlobalProtectClientVersion,#1)<>last(/Palo Alto Networks Firewall/panSysGlobalProtectClientVersion,#2))=1'
+            - uuid: 211061de1d274109820af7f1e27ab337
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysGlobalProtectClientVersion,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysGlobalProtectClientVersion,#2))=1'
               name: 'Global Protect Client Version has changed to {ITEM.VALUE}'
               priority: INFO
               manual_close: 'YES'
-        -
-          uuid: 95e8c17e18b04f97b7d41f5d7caa8128
+        - uuid: 95e8c17e18b04f97b7d41f5d7caa8128
           name: 'HA Mode'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.13.0
@@ -226,8 +207,7 @@ zabbix_export:
           trends: '0'
           value_type: TEXT
           description: 'Current high-availability mode (disabled, active-passive, or active-active).'
-        -
-          uuid: fbeb733e9a224df8a65edd6a35e5a13d
+        - uuid: fbeb733e9a224df8a65edd6a35e5a13d
           name: 'HA Peer State'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.12.0
@@ -236,8 +216,7 @@ zabbix_export:
           trends: '0'
           value_type: TEXT
           description: 'Current peer high-availability state.'
-        -
-          uuid: 69c101bad9d74bfc83d33e590e2e2dd2
+        - uuid: 69c101bad9d74bfc83d33e590e2e2dd2
           name: 'HA State'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.11.0
@@ -247,14 +226,12 @@ zabbix_export:
           value_type: TEXT
           description: 'Current high-availability state.'
           triggers:
-            -
-              uuid: 937c5fe5976a42c6bfc06ce7add11211
-              expression: '(last(/Palo Alto Networks Firewall/panSysHAState,#1)<>last(/Palo Alto Networks Firewall/panSysHAState,#2))=1'
+            - uuid: 937c5fe5976a42c6bfc06ce7add11211
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysHAState,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysHAState,#2))=1'
               name: '{HOST.HOST} switched to {ITEM.VALUE} state in HA cluster'
               priority: AVERAGE
               manual_close: 'YES'
-        -
-          uuid: 3886ca9c88b54b808676631eabd76a06
+        - uuid: 3886ca9c88b54b808676631eabd76a06
           name: 'HW Version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.2.0
@@ -265,8 +242,7 @@ zabbix_export:
           value_type: TEXT
           description: 'Hardware version of the unit.'
           inventory_link: HARDWARE
-        -
-          uuid: 6ddb1ff37b0e4ff890ee4d4ee900ee0f
+        - uuid: 6ddb1ff37b0e4ff890ee4d4ee900ee0f
           name: 'Serial Number'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.3.0
@@ -278,17 +254,15 @@ zabbix_export:
           description: 'The serial number of the unit. If not available, an empty string is returned.'
           inventory_link: SERIALNO_A
           triggers:
-            -
-              uuid: 37187e18b830450ab673440df4e982c3
-              expression: '(last(/Palo Alto Networks Firewall/panSysSerialNumber,#1)<>last(/Palo Alto Networks Firewall/panSysSerialNumber,#2))=1 and length(last(/Palo Alto Networks Firewall/panSysSerialNumber))>0'
+            - uuid: 37187e18b830450ab673440df4e982c3
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysSerialNumber,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysSerialNumber,#2))=1 and length(last(/Palo Alto Networks Firewall by SNMP/panSysSerialNumber))>0'
               name: 'Device has been replaced (new serial number received)'
               priority: INFO
               description: |
                 Last value: {ITEM.LASTVALUE1}.
                 Device serial number has changed. Ack to close
               manual_close: 'YES'
-        -
-          uuid: 69ce7e2a81e349f9b0bee1773a1dca08
+        - uuid: 69ce7e2a81e349f9b0bee1773a1dca08
           name: 'PAN-OS Version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.1.0
@@ -300,15 +274,13 @@ zabbix_export:
           description: 'Full software version. The first two components of the full version are the major and minor versions. The third component indicates the maintenance release number.'
           inventory_link: OS
           triggers:
-            -
-              uuid: 1758114fdda2498b9c252ae8bc8b6cbb
-              expression: '(last(/Palo Alto Networks Firewall/panSysSwVersion,#1)<>last(/Palo Alto Networks Firewall/panSysSwVersion,#2))=1'
+            - uuid: 1758114fdda2498b9c252ae8bc8b6cbb
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysSwVersion,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysSwVersion,#2))=1'
               name: 'PAN-OS version has changed to {ITEM.VALUE}'
               priority: INFO
               description: 'Operating system on a PA firewall has been upgraded or downgraded'
               manual_close: 'YES'
-        -
-          uuid: 51dc53b9aae74fffb5a3af3ac0540a76
+        - uuid: 51dc53b9aae74fffb5a3af3ac0540a76
           name: 'Threat Version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.9.0
@@ -319,14 +291,12 @@ zabbix_export:
           value_type: TEXT
           description: 'Currently installed threat definition version. If no threat definition is found, 0 is returned.'
           triggers:
-            -
-              uuid: efee5e6656414ba3b35ca6d1c686e03c
-              expression: '(last(/Palo Alto Networks Firewall/panSysThreatVersion,#1)<>last(/Palo Alto Networks Firewall/panSysThreatVersion,#2))=1'
+            - uuid: efee5e6656414ba3b35ca6d1c686e03c
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysThreatVersion,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysThreatVersion,#2))=1'
               name: 'Threat version has changed to {ITEM.VALUE}'
               priority: INFO
               manual_close: 'YES'
-        -
-          uuid: 4737b7ec368f4c97860c4c78f3b903c9
+        - uuid: 4737b7ec368f4c97860c4c78f3b903c9
           name: 'URL Filtering Version'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.25461.2.1.2.1.10.0
@@ -337,15 +307,13 @@ zabbix_export:
           value_type: TEXT
           description: 'Currently installed URL filtering version. If no URL filtering is installed, 0 is returned.'
           triggers:
-            -
-              uuid: 1bab31c0072f4c51999a71675fd370c9
-              expression: '(last(/Palo Alto Networks Firewall/panSysUrlFilteringVersion,#1)<>last(/Palo Alto Networks Firewall/panSysUrlFilteringVersion,#2))=1'
+            - uuid: 1bab31c0072f4c51999a71675fd370c9
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/panSysUrlFilteringVersion,#1)<>last(/Palo Alto Networks Firewall by SNMP/panSysUrlFilteringVersion,#2))=1'
               name: 'URL Filtering Version has changed to {ITEM.VALUE}'
               status: DISABLED
               priority: INFO
               manual_close: 'YES'
-        -
-          uuid: 7d4807bf69534f47aa0d702e919a3dba
+        - uuid: 7d4807bf69534f47aa0d702e919a3dba
           name: 'System Description'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.2.1.1.1.0
@@ -356,8 +324,7 @@ zabbix_export:
           value_type: TEXT
           description: 'A textual description of the entity.  This value should include the full name and version identification of the system''s hardware type, software operating-system, and networking software.  It is mandatory that this only contain printable ASCII characters.'
           inventory_link: TYPE
-        -
-          uuid: a1bb135924e84e7f8b679db16790e34f
+        - uuid: a1bb135924e84e7f8b679db16790e34f
           name: 'System Name'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.2.1.1.5.0
@@ -369,15 +336,13 @@ zabbix_export:
           description: 'An administratively-assigned name for this managed node.  By convention, this is the node''s fully-qualified domain name.'
           inventory_link: NAME
           triggers:
-            -
-              uuid: e9f0b816900c4866a4dd36b57048a09b
-              expression: '(last(/Palo Alto Networks Firewall/sysName,#1)<>last(/Palo Alto Networks Firewall/sysName,#2))=1'
+            - uuid: e9f0b816900c4866a4dd36b57048a09b
+              expression: '(last(/Palo Alto Networks Firewall by SNMP/sysName,#1)<>last(/Palo Alto Networks Firewall by SNMP/sysName,#2))=1'
               name: 'Hostname has changed to {ITEM.VALUE}'
               priority: INFO
               description: 'Device hostname on a PA firewall has been changed'
               manual_close: 'YES'
-        -
-          uuid: 9248a0838ff74e40b751120996c24ea4
+        - uuid: 9248a0838ff74e40b751120996c24ea4
           name: 'System Uptime'
           type: SNMP_AGENT
           snmp_oid: 1.3.6.1.2.1.25.1.1.0
@@ -386,19 +351,16 @@ zabbix_export:
           units: uptime
           description: 'The time (in hundredths of a second) since the network management portion of the system was last re-initialized.'
           preprocessing:
-            -
-              type: MULTIPLIER
+            - type: MULTIPLIER
               parameters:
-                - '.01'
+                - '0.01'
           triggers:
-            -
-              uuid: 0411fb1410784a209dc9d217446ecd40
-              expression: 'change(/Palo Alto Networks Firewall/sysUpTime)<0'
+            - uuid: 0411fb1410784a209dc9d217446ecd40
+              expression: 'change(/Palo Alto Networks Firewall by SNMP/sysUpTime)<0'
               name: '{HOST.HOST} has just been restarted'
               priority: AVERAGE
               manual_close: 'YES'
-        -
-          uuid: 28b730c6bf7240fd8cb711b1c02fce54
+        - uuid: 28b730c6bf7240fd8cb711b1c02fce54
           name: 'SNMP availability'
           type: INTERNAL
           key: 'zabbix[host,snmp,available]'
@@ -408,8 +370,7 @@ zabbix_export:
           valuemap:
             name: zabbix.host.available
       discovery_rules:
-        -
-          uuid: 8916021e8f9f415685f1e8b8e376ff2f
+        - uuid: 8916021e8f9f415685f1e8b8e376ff2f
           name: '$1 Discovery'
           type: SNMP_AGENT
           snmp_oid: 'discovery[{#SNMPVALUE},1.3.6.1.2.1.47.1.1.1.1.2]'
@@ -417,28 +378,24 @@ zabbix_export:
           delay: '3600'
           filter:
             conditions:
-              -
-                macro: '{#SNMPVALUE}'
+              - macro: '{#SNMPVALUE}'
                 value: Fan
                 formulaid: A
           description: 'A textual description of physical entity. This object should contain a string that identifies the manufacturer''s name for the physical entity, and should be set to a distinct value for each version or model of the physical entity.'
           item_prototypes:
-            -
-              uuid: 8431b19b8ea34bf99d989c71e5a7c32a
+            - uuid: 8431b19b8ea34bf99d989c71e5a7c32a
               name: 'Operational status of $1'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.2.1.99.1.1.1.5.{#SNMPINDEX}'
               key: 'entPhySensorOperStatus[{#SNMPVALUE},FAN]'
               delay: '300'
               trigger_prototypes:
-                -
-                  uuid: d16b7a342c824cbab29e21da46cc2ca1
-                  expression: 'last(/Palo Alto Networks Firewall/entPhySensorOperStatus[{#SNMPVALUE},FAN])=3'
+                - uuid: d16b7a342c824cbab29e21da46cc2ca1
+                  expression: 'last(/Palo Alto Networks Firewall by SNMP/entPhySensorOperStatus[{#SNMPVALUE},FAN])=3'
                   name: '{#SNMPVALUE} is nonoperational'
                   priority: HIGH
                   description: 'Trigger for fan operational status'
-            -
-              uuid: a140baed09ac4827a81d326c7359f215
+            - uuid: a140baed09ac4827a81d326c7359f215
               name: '{#SNMPVALUE}'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.2.1.99.1.1.1.4.{#SNMPINDEX}'
@@ -449,8 +406,7 @@ zabbix_export:
                 ENTITY-SENSOR-MIB::entPhySensorValue&#13;
                 &#13;
                 The most recent measurement obtained by the agent for this sensor.
-        -
-          uuid: b133aa1d7a854de38ad786767b5a4148
+        - uuid: b133aa1d7a854de38ad786767b5a4148
           name: '$1 Discovery'
           type: SNMP_AGENT
           snmp_oid: 'discovery[{#SNMPVALUE},1.3.6.1.2.1.47.1.1.1.1.2]'
@@ -458,22 +414,19 @@ zabbix_export:
           delay: '3600'
           filter:
             conditions:
-              -
-                macro: '{#SNMPVALUE}'
+              - macro: '{#SNMPVALUE}'
                 value: Temperature
                 formulaid: A
           description: 'A textual description of physical entity. This object should contain a string that identifies the manufacturer''s name for the physical entity, and should be set to a distinct value for each version or model of the physical entity.'
           item_prototypes:
-            -
-              uuid: 9fb1c5af3a2d42598d8eaf186ac24a69
+            - uuid: 9fb1c5af3a2d42598d8eaf186ac24a69
               name: 'Operational status of {#SNMPVALUE}'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.2.1.99.1.1.1.5.{#SNMPINDEX}'
               key: 'entPhySensorOperStatus[{#SNMPINDEX},TEMPERATURE]'
               delay: '300'
               description: 'Discovery of alarm status at temperature sensor'
-            -
-              uuid: f3d1cc596b2d441496d501393eb358e9
+            - uuid: f3d1cc596b2d441496d501393eb358e9
               name: '{#SNMPVALUE}'
               type: SNMP_AGENT
               snmp_oid: '.1.3.6.1.2.1.99.1.1.1.4.{#SNMPINDEX}'
@@ -482,74 +435,63 @@ zabbix_export:
               units: °C
               description: 'Temperature item discovery'
           trigger_prototypes:
-            -
-              uuid: 10fd5d3288684fb4a6b43bfc7a1b2094
-              expression: 'last(/Palo Alto Networks Firewall/entPhySensorValue[{#SNMPINDEX},TEMPERATURE])>50 and last(/Palo Alto Networks Firewall/entPhySensorOperStatus[{#SNMPINDEX},TEMPERATURE])=3'
+            - uuid: 10fd5d3288684fb4a6b43bfc7a1b2094
+              expression: 'last(/Palo Alto Networks Firewall by SNMP/entPhySensorValue[{#SNMPINDEX},TEMPERATURE])>50 and last(/Palo Alto Networks Firewall by SNMP/entPhySensorOperStatus[{#SNMPINDEX},TEMPERATURE])=3'
               name: '{#SNMPVALUE} is {ITEM.VALUE1}'
               priority: WARNING
           graph_prototypes:
-            -
-              uuid: 3e583ebb13c940da9a3acab9f61400af
+            - uuid: 3e583ebb13c940da9a3acab9f61400af
               name: 'Temperature: {#SNMPVALUE}'
               graph_items:
-                -
-                  color: 1A7C11
+                - color: 1A7C11
                   item:
-                    host: 'Palo Alto Networks Firewall'
+                    host: 'Palo Alto Networks Firewall by SNMP'
                     key: 'entPhySensorValue[{#SNMPINDEX},TEMPERATURE]'
+      tags:
+        - tag: class
+          value: network
+        - tag: target
+          value: panw
       valuemaps:
-        -
-          uuid: 671ec64bb00d4d38839b00dbe59db977
+        - uuid: 671ec64bb00d4d38839b00dbe59db977
           name: 'Service state'
           mappings:
-            -
-              value: '0'
+            - value: '0'
               newvalue: Down
-            -
-              value: '1'
+            - value: '1'
               newvalue: Up
-        -
-          uuid: fa01da1fdd534ba19af8127ed2cea320
+        - uuid: fa01da1fdd534ba19af8127ed2cea320
           name: zabbix.host.available
           mappings:
-            -
-              value: '0'
+            - value: '0'
               newvalue: 'not available'
-            -
-              value: '1'
+            - value: '1'
               newvalue: available
-            -
-              value: '2'
+            - value: '2'
               newvalue: unknown
   graphs:
-    -
-      uuid: 9ae35e2bb3af4b6084d2d484d82bdbbb
+    - uuid: 9ae35e2bb3af4b6084d2d484d82bdbbb
       name: 'CPU load graph'
       graph_items:
-        -
-          color: 1A7C11
+        - color: 1A7C11
           item:
-            host: 'Palo Alto Networks Firewall'
+            host: 'Palo Alto Networks Firewall by SNMP'
             key: hrProcessorLoad1
-        -
-          sortorder: '1'
+        - sortorder: '1'
           color: F63100
           item:
-            host: 'Palo Alto Networks Firewall'
+            host: 'Palo Alto Networks Firewall by SNMP'
             key: hrProcessorLoad2
-    -
-      uuid: c9dc1cdfeb4742e494b82e89b8f41e97
+    - uuid: c9dc1cdfeb4742e494b82e89b8f41e97
       name: 'Sessions load graph'
       graph_items:
-        -
-          color: 1A7C11
+        - color: 1A7C11
           item:
-            host: 'Palo Alto Networks Firewall'
+            host: 'Palo Alto Networks Firewall by SNMP'
             key: panSessionActive
-        -
-          sortorder: '1'
+        - sortorder: '1'
           drawtype: DASHED_LINE
           color: F63100
           item:
-            host: 'Palo Alto Networks Firewall'
+            host: 'Palo Alto Networks Firewall by SNMP'
             key: panSessionMax
