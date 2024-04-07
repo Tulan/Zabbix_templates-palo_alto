@@ -25,9 +25,9 @@ Create a NGFW host and link this template to it.
 - Set/change the SNMP community in the host SNMP settings to match your community string. See [CONFIGURING SNMP MONITORING](https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/snmp#configuring_snmp_monitoring)
 - Set SNMP community on the NGFW and commit. See [Enable SNMP Monitoring] (https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/device/device-setup-operations/enable-snmp-monitoring.html)
 
-## Template links
+## Interface monitoring
 
-This template is NOT linked with "Template Module Interfaces SNMPv2". Please add it manually to your monitored host.
+To monitor interfaces on the firewall please add "Network Generic Device by SNMP" template to your monitored host.
 
 ## Discovery rules
 

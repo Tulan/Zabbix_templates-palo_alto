@@ -9,6 +9,7 @@ zabbix_export:
       name: 'Palo Alto Networks Firewall by SNMP'
       description: |
         Template for monitoring Palo Alto Networks by SNMPv2
+        To monitor interfaces on the firewall please add "Network Generic Device by SNMP" template to your monitored host.
         MIBs used:
         TBD
         
