@@ -2,9 +2,9 @@
 
 ## Overview
 
-The template to monitor Palo Alto Networks NGFW PAN-OS by Zabbix v.6.4 using SNMP v2c. For use with a different Zabbix version please choose corresponding branch.
+The template to monitor Palo Alto Networks NGFW PAN-OS by Zabbix v.7.0 using SNMP v2c or SNMPv3. For use with a different Zabbix version please choose corresponding branch.
 
-TIP: to monitor firewalls interfaces, please add offcial zabbix template: [Template Module Interfaces SNMPv2](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/module/interfaces_snmp?at=refs%2Fheads%2Frelease%2F5.0).
+This template is linked with official zabbix template: [Network Generic Device by SNMP](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/net/generic_snmp?at=refs%2Fheads%2Frelease%2F7.0).
 
 This template was tested on:
 
@@ -16,24 +16,26 @@ This template was tested on:
 
 ## Setup
 
-> See [Zabbix templates importing](https://www.zabbix.com/documentation/5.2/manual/xml_export_import/templates#importing) for basic instructions on how to import a template.
+> See [Zabbix templates importing](https://www.zabbix.com/documentation/7.0/en/manual/xml_export_import/templates#importing) for basic instructions on how to import a template.
 
 Create a NGFW host and link this template to it.
 
 ## Zabbix configuration
 
-- Set/change the SNMP community in the host SNMP settings to match your community string. See [CONFIGURING SNMP MONITORING](https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/snmp#configuring_snmp_monitoring)
-- Set SNMP community on the NGFW and commit. See [Enable SNMP Monitoring] (https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/device/device-setup-operations/enable-snmp-monitoring.html)
+- Set/change the SNMP settings to match your community string (SNMPv2c) or Security name, security level ... (SNMPv3). See [CONFIGURING SNMP MONITORING](https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/snmp#configuring_snmp_monitoring)
+- Set SNMP settings on the NGFW and commit. See [Enable SNMP Monitoring] (https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/device/device-setup-operations/enable-snmp-monitoring.html)
 
 ## Interface monitoring
 
-To monitor interfaces on the firewall please add "Network Generic Device by SNMP" template to your monitored host.
+Interfaces monitored by template **Network Generic Device by SNMP**
 
 ## Discovery rules
 
 |Name|Description|Type|Key and additional info|
 |----|-----------|----|----|
+|DISK Discovery |<p>Discovery for disk partitions</p> |SNMP agent |vfs.storage.partitions<p>**Filter**:</p><p>based on `SNMP walk storage table` item, MATCHES_REGEX `.1.3.6.1.2.1.25.2.1.4`</p> |
 |FAN Discovery |<p>Discovery for fans</p> |SNMP agent |entPhysicalDescr[FAN]<p>**Filter**:</p><p>{#SNMPVALUE} MATCHES_REGEX `{Fan}`</p> |
+|POWER Discovery |<p>Discovery for power supplies</p> |SNMP agent |entPhysicalDescr[POWER]<p>**Filter**:</p><p>{#SNMPVALUE} MATCHES_REGEX `{Power}`</p> |
 |TEMPERATURE Discovery |<p>Discovery of temperature sensors</p> |SNMP agent |entPhysicalDescr[TEMPERATURE]<p>**Filter**:</p><p>{#SNMPVALUE} MATCHES_REGEX `{Temperature}`</p> |
 
 ## Items collected
@@ -51,23 +53,22 @@ To monitor interfaces on the firewall please add "Network Generic Device by SNMP
 |HA Peer State |<p>Current peer high-availability state.</p> |
 |HA State |<p>Current high-availability state.</p> |
 |HW Version |<p>Hardware version of the unit.</p> |
-|ICMP Check |<p>Ping to device.</p> |
+|Memory utilization |<p>calculated item </p> |
 |PAN-OS Version |<p>Full software version. The first two components of the full version are the major and minor versions. The third component indicates the maintenance release number.</p> |
 |Processor 1 Load (mgmt) |<p>The average, over the last minute, of the percentage of time that this processor was not idle. Implementations may approximate this one minute smoothing period if necessary.</p> |
 |Processor 2 Load (data) |<p>The average, over the last minute, of the percentage of time that this processor was not idle. Implementations may approximate this one minute smoothing period if necessary.</p> |
 |Serial Number |<p>The serial number of the unit. If not available, an empty string is returned.</p> |
 |Session table utilization |<p>Session table utilization percentage. Values should be between 0 and 100.</p> |
-|SNMP availability |<p>SNMP availability.</p> |
-|System Description |<p>A textual description of the entity.  This value should include the full name and version identification of the system's hardware type, software operating-system, and networking software.  It is mandatory that this only contain printable ASCII characters.</p> |
-|System Name |<p>An administratively-assigned name for this managed node.  By convention, this is the node's fully-qualified domain name.</p> |
-|System Uptime |<p>The time (in hundredths of a second) since the network management portion of the system was last re-initialized. Preprocessed to seconds.</p> |
+|SNMP walk storage table |<p>SNMP extract of `HOST-RESOURCES-MIB::hrStorageTable`, used for disk discovery</p> |
 |Threat Version |<p>Currently installed threat definition version. If no threat definition is found, 0 is returned.</p> |
 |Total active ICMP sessions |<p>Total number of active ICMP sessions.</p> |
 |Total active sessions |<p>Total number of active sessions.</p> |
 |Total active TCP sessions |<p>Total number of active TCP sessions.</p> |
 |Total active UDP sessions |<p>Total number of active UDP sessions.</p> |
+|Total Memory |<p>Memory installed in system.</p> |
 |Total supported sessions |<p>Total number of sessions supported.</p> |
 |URL Filtering Version |<p>Currently installed URL filtering version. If no URL filtering is installed, 0 is returned.</p> |
+|Used Memory |<p>Memory actually used by system.</p> |
 
 ## Triggers
 
