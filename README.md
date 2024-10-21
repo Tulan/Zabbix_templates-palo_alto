@@ -2,9 +2,9 @@
 
 ## Overview
 
-The template to monitor Palo Alto Networks NGFW PAN-OS by Zabbix v.6.4 using SNMP v2c. For use with a different Zabbix version please choose corresponding branch.
+The template to monitor Palo Alto Networks NGFW PAN-OS by Zabbix v.7.0 using SNMP v2c or SNMPv3. For use with a different Zabbix version please choose corresponding branch.
 
-TIP: to monitor firewalls interfaces, please add offcial zabbix template: [Template Module Interfaces SNMPv2](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/module/interfaces_snmp?at=refs%2Fheads%2Frelease%2F5.0).
+This template is linked with official zabbix template: [Network Generic Device by SNMP](https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/net/generic_snmp?at=refs%2Fheads%2Frelease%2F7.0).
 
 This template was tested on:
 
@@ -16,18 +16,18 @@ This template was tested on:
 
 ## Setup
 
-> See [Zabbix templates importing](https://www.zabbix.com/documentation/5.2/manual/xml_export_import/templates#importing) for basic instructions on how to import a template.
+> See [Zabbix templates importing](https://www.zabbix.com/documentation/7.0/en/manual/xml_export_import/templates#importing) for basic instructions on how to import a template.
 
 Create a NGFW host and link this template to it.
 
 ## Zabbix configuration
 
-- Set/change the SNMP community in the host SNMP settings to match your community string. See [CONFIGURING SNMP MONITORING](https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/snmp#configuring_snmp_monitoring)
-- Set SNMP community on the NGFW and commit. See [Enable SNMP Monitoring] (https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/device/device-setup-operations/enable-snmp-monitoring.html)
+- Set/change the SNMP settings to match your community string (SNMPv2c) or Security name, security level ... (SNMPv3). See [CONFIGURING SNMP MONITORING](https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/snmp#configuring_snmp_monitoring)
+- Set SNMP settings on the NGFW and commit. See [Enable SNMP Monitoring] (https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/device/device-setup-operations/enable-snmp-monitoring.html)
 
 ## Interface monitoring
 
-To monitor interfaces on the firewall please add "Network Generic Device by SNMP" template to your monitored host.
+Interfaces monitored by template **Network Generic Device by SNMP**
 
 ## Discovery rules
 
